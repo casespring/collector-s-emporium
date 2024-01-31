@@ -29,9 +29,7 @@ Collectify is a social media app designed for collectors who want to share their
 
 - Frontend: [Flutter](https://docs.flutter.dev/) with [Dart]
 
-- Backend: [Django](https://www.djangoproject.com/) with [Python] / [Flask](https://flask.palletsprojects.com/en/3.0.x/)
-
-- Authentication: [Firebase Authentication](https://firebase.google.com/products/auth) 
+- Backend: [Django](https://www.djangoproject.com/) with [Python] / [Flask](https://flask.palletsprojects.com/en/3.0.x/) [Firebase Authentication](https://firebase.google.com/products/auth) 
 
 ## Getting Started
 
@@ -45,7 +43,8 @@ Collectify is a social media app designed for collectors who want to share their
 
    ```bash
    cd collector-s-emporium
-   npm install
+   flutter pub get
+   flutter run
    ```
 
 3. Set up the backend:
