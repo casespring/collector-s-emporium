@@ -44,7 +44,7 @@ Collectify is a social media app designed for collectors who want to share their
 2. Install dependencies:
 
    ```bash
-   cd collectify
+   cd collector-s-emporium
    npm install
    ```
 
@@ -56,27 +56,19 @@ Collectify is a social media app designed for collectors who want to share their
 4. Start the server:
 
    ```bash
-   cd backend
-   npm start
+   cd flask-backend
+   pipenv install
+   pipenv shell
+   cd server
+   python app.py
    ```
 
 5. Start the frontend:
 
    ```bash
-   cd ..
-   npm start
+   cd client
+   cd collecotrs_social_media_app
+   flutter run 
    ```
 
 6. Open the app in your preferred emulator or device.
-
-## Contributing
-
-Contributions are welcome! If you have ideas for new features, bug fixes, or improvements, feel free to open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-Make sure to replace placeholders like `[Your Preferred Framework]`, `[Your Preferred Database]`, `[Your Preferred Authentication System]`, and others with the actual technologies and details you are using for your app. Additionally, customize the sections to provide information specific to your project.
