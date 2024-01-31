@@ -5,9 +5,7 @@ name = "pypi"
 
 [packages]
 werkzeug="*"
-SQLAlchemy = "1.4.49"
 Faker = "14.2.0"
-Flask = "2.2.2"
 Flask-Migrate = "3.1.0"
 Flask-SQLAlchemy = "2.5.1"
 importlib-resources = "5.10.0"
@@ -19,6 +17,9 @@ flask-restful = "*"
 flask-bcrypt = "*"
 python-dotenv = "*"
 Werkzeug = "*"
+flask = "*"
+py = "==1.11.0"
+sqlalchemy = "*"
 
 [dev-packages]
 
