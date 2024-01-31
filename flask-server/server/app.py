@@ -32,6 +32,30 @@ api = Api(app)
 #     users = User.query.all()
 #     return [user.to_dict() for user in users]
 
+# CHECK SESSION
+@app.get('/check_session')
+def check_session():
+    user = User.query.get(session.get('user_id'))
+    print(f'check session {session.get("user_id")}')
+    if user:
+        return user.to_dict(rules=['-password']), 200
+    else:
+        return {"message": "No user logged in"}, 401
+
+# LOGIN
+@app.post('/login')
+def login():
+    data = request.json
+
+    user = User.query.filter(User.name == data.get('name')).first()
+
+    if user and bcrypt.check_password_hash(user.password, data.get('password')):
+        session["user_id"] = user.id
+        print("success")
+        return user.to_dict(rules=['-password']), 200
+    else:
+        return { "error": "Invalid username or password" }, 401
+
 class Index(Resource):
     def get(self):
         return {'message': 'Welcome to the Collectify API'}
@@ -125,10 +149,72 @@ class UsersByID(Resource):
             return {'message': 'User deleted'}
         else:
             return {'message': 'User not found'}, 404
+
+class Collections(Resource):
+
+    def get(self):
+        collections = Collection.query.all()
+        return {'users': [collection.to_dict() for collection in collections]}
+
+    def post(self):
+        data = request.get_json()
+        collection = Collection(title=data['title'], 
+                                description=data['description'], 
+                                image_url=data['image_url'], 
+                                user_id=data['user_id'])
+        db.session.add(collection)
+        db.session.commit()
+        return collection.to_dict(), 201
+    
+class CollectionByID(Resource):
+
+    def get(self, collection_id):
+        collection = Collection.query.get(collection_id)
+        if collection:
+            return collection.to_dict()
+        else:
+            return {'message': 'Collection not found'}, 404
+
+    def patch(self, collection_id):
+        data = request.get_json()
+        collection = Collection.query.get(collection_id)
+        if collection:
+            collection.title = data.get('title', collection.title)
+            collection.description = data.get('description', collection.description)
+            collection.image_url = data.get('image_url', collection.image_url)
+            db.session.commit()
+            return collection.to_dict()
+        else:
+            return {'message': 'Collection not found'}, 404
+
+    def delete(self, collection_id):
+        collection = Collection.query.get(collection_id)
+        if collection:
+            db.session.delete(collection)
+            db.session.commit()
+            return {'message': 'Collection deleted'}
+        else:
+            return {'message': 'Collection not found'}, 404
         
+class CommentResource(Resource):
+
+    def get(self):
+        comments = Comment.query.all()
+        return {'comments': [comment.to_dict() for comment in comments]}
+
+    def post(self):
+        data = request.get_json()
+        comment = Comment(text=data['text'])
+        db.session.add(comment)
+        db.session.commit()
+        return comment.to_dict(), 201
+            
 api.add_resource(Index, '/')
 api.add_resource(Users, '/users')
 api.add_resource(UsersByID, '/users/<int:user_id>')
+api.add_resource(Collections, '/collections')
+api.add_resource(CollectionByID, '/collections/<int:collection_id>')
+api.add_resource(CommentResource, '/comments')   
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

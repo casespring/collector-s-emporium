@@ -43,16 +43,16 @@ class User(db.Model, SerializerMixin):
     bookmarks = db.relationship("Bookmark", back_populates="user", cascade="all, delete-orphan")
 
     # serialize_rules
-    serialize_rules = ["-collections.user", 
-                       "-comments.user", 
-                       "-likes.user", 
-                       "-forums.user", 
-                       "-posts.user", 
-                       "-comments_on_posts.user", 
-                       "-market_place_items.user", 
-                       "-followers.follower", 
-                       "-following.following",
-                       "-bookmarks.user"]
+    serialize_rules = ["-collections", 
+                       "-comments", 
+                       "-likes", 
+                       "-forums", 
+                       "-posts", 
+                       "-comments_on_posts", 
+                       "-market_place_items", 
+                       "-followers", 
+                       "-following",
+                       "-bookmarks"]
 
     def __repr__(self):
         return f"<User {self.id}: {self.username}, {self.first_name}, {self.last_name}, {self.user_image}, {self.created_at}>"
@@ -78,7 +78,7 @@ class Collection(db.Model, SerializerMixin):
     # notifications = db.relationship("Notification", back_populates="collection", cascade="all, delete-orphan")
 
     # serialize_rules
-    serialize_rules = ["-user.collections", "-comments.collection", "-likes.collection", "-bookmarks.collection"]
+    serialize_rules = ["-user", "-comments", "-likes", "-bookmarks"]
 
     def __repr__(self):
         return f"<Collection {self.id}: {self.title}, {self.description}, {self.user_id}, {self.created_at}>"
@@ -100,7 +100,7 @@ class Comment(db.Model, SerializerMixin):
     collection = db.relationship("Collection", back_populates="comments")
 
     # serialize_rules
-    serialize_rules = ["-user.comments", "-collection.comments"]
+    serialize_rules = ["-user", "-collection"]
 
     def __repr__(self):
         return f"<Comment {self.id}: {self.text}, {self.user_id}, {self.collection_id}, {self.created_at}>"
@@ -120,7 +120,7 @@ class Like(db.Model, SerializerMixin):
     collection = db.relationship("Collection", back_populates="likes")
 
     # serialize_rules
-    serialize_rules = ["-user.likes", "-collection.likes"]
+    serialize_rules = ["-user", "-collection"]
 
     def __repr__(self):
         return f"<Like {self.id}: {self.user_id}, {self.collection_id}, {self.created_at}>"
@@ -151,7 +151,7 @@ class Forum(db.Model, SerializerMixin):
     posts = db.relationship("Post", back_populates="forum", cascade="all, delete-orphan")
 
     # serialize_rules
-    serialize_rules = ["-user.forums", "-posts.forum"]
+    serialize_rules = ["-user", "-posts"]
 
     def __repr__(self):
         return f"<Forum {self.id}: {self.title}, {self.description}, {self.user_id}, {self.created_at}>"
@@ -177,7 +177,7 @@ class Post(db.Model, SerializerMixin):
     # notifications = db.relationship("Notification", back_populates="related_post", foreign_keys="Notification.related_post_id")
 
     # serialize_rules
-    serialize_rules = ["-user.posts", "-forum.posts", "-comments_on_posts.post", "-bookmarks.post"]
+    serialize_rules = ["-user", "-forum", "-comments_on_posts", "-bookmarks"]
 
     def __repr__(self):
         return f"<Post {self.id}: {self.text}, {self.user_id}, {self.forum_id}, {self.created_at}>"
@@ -199,7 +199,7 @@ class CommentOnPost(db.Model, SerializerMixin):
     post = db.relationship("Post", back_populates="comments_on_posts")
 
     # serialize_rules
-    serialize_rules = ["-user.comments_on_posts", "-post.comments_on_posts"]
+    serialize_rules = ["-user", "-post"]
 
     def __repr__(self):
         return f"<CommentOnPost {self.id}: {self.text}, {self.user_id}, {self.post_id}, {self.created_at}>"
@@ -224,7 +224,7 @@ class MarketPlaceItem(db.Model, SerializerMixin):
     # notifications = db.relationship("Notification", back_populates="related_marketplace_item", cascade="all, delete-orphan")
 
     # serialize_rules
-    serialize_rules = ["-user.market_place_items", "-bookmarks.market_place_items"]
+    serialize_rules = ["-user", "-bookmarks"]
 
     def __repr__(self):
         return f"<MarketPlaceItem {self.id}: {self.title}, {self.description}, {self.price}, {self.user_id}, {self.created_at}>"
@@ -243,7 +243,7 @@ class Followers(db.Model, SerializerMixin):
     following = db.relationship("User", foreign_keys=[following_user_id])
 
     # serialize_rules
-    serialize_rules = ["-follower.followers", "-following.followers"]
+    serialize_rules = ["-follower", "-following"]
 
     def __repr__(self):
         return f"<Followers {self.id}: {self.follower_user_id}, {self.following_user_id}>"
@@ -266,7 +266,7 @@ class Bookmark(db.Model, SerializerMixin):
     market_place_items = db.relationship("MarketPlaceItem", back_populates="bookmarks")
 
     # serialize_rules
-    serialize_rules = ["-user.bookmarks", "-collection.bookmarks", "-post.bookmarks", "-market_place_item.bookmarks"]
+    serialize_rules = ["-user", "-collection", "-post", "-market_place_items"]
 
     def __repr__(self):
         return f"<Bookmark {self.id}: {self.user_id}, {self.collection_id}, {self.post_id}, {self.market_place_items_id}>"
