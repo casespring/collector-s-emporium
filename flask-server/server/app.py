@@ -217,4 +217,4 @@ api.add_resource(CollectionByID, '/collections/<int:collection_id>')
 api.add_resource(CommentResource, '/comments')   
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(port=5565, debug=True)
