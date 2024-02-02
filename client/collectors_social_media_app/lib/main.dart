@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:collectors_social_media_app/pages/home_page.dart'; // This is now your main navigation page
-import 'package:collectors_social_media_app/pages/feed_page.dart'; // This is your new feed page
+import 'package:collectors_social_media_app/pages/community_page.dart';
+import 'package:collectors_social_media_app/pages/message_page.dart';
+import 'package:collectors_social_media_app/pages/post_page.dart';
+import 'package:collectors_social_media_app/pages/home_page.dart'; 
+import 'package:collectors_social_media_app/pages/feed_page.dart'; 
 import 'package:collectors_social_media_app/pages/profile_page.dart';
+import 'package:collectors_social_media_app/pages/notification_page.dart';
 import 'package:collectors_social_media_app/pages/settings_page.dart';
 
 void main() {
@@ -15,11 +19,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(), // Changed from RoutePage to HomePage
+      initialRoute: '/', // Set the initial route
       routes: {
-        '/home': (context) => HomePage(), // This route now corresponds to your main navigation page
-        '/feed': (context) => FeedPage(), // This is your new feed page route
+        '/': (context) => HomePage(), 
+        '/feed': (context) => FeedPage(), 
+        '/post': (context) => PostPage(),
+        '/community': (context) => CommunityPage(),
+        '/message': (context) => MessagePage(),
         '/profile': (context) => ProfilePage(),
+        '/notification': (context) => NotificationPage(),
         '/settings': (context) => SettingsPage(),
       },
     );
