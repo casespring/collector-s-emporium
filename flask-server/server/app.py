@@ -8,6 +8,7 @@ from models import db, User, Collection, Comment, Like, Tag, Forum, Post, Commen
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bcrypt import Bcrypt
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.orm import joinedload
 from flask_bcrypt import Bcrypt
 import os
 
@@ -167,13 +168,18 @@ class Collections(Resource):
         return collection.to_dict(), 201
     
 class CollectionByID(Resource):
-
+    
     def get(self, collection_id):
-        collection = Collection.query.get(collection_id)
-        if collection:
-            return collection.to_dict()
-        else:
+        collection = Collection.query.options(joinedload(Collection.comments), joinedload(Collection.likes)).get(collection_id)
+        if collection is None:
             return {'message': 'Collection not found'}, 404
+
+        collection_data = collection.to_dict()
+        collection_data['user'] = collection.user.to_dict()  # Include user data
+        collection_data['comments'] = [comment.to_dict() for comment in collection.comments]  # Include comments
+        collection_data['likes_count'] = len(collection.likes)  # Include likes count
+
+        return collection_data, 200
 
     def patch(self, collection_id):
         data = request.get_json()

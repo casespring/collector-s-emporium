@@ -8,7 +8,7 @@ class CommunityPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("Community page"),
+        child: Text("Under Construction"),
       ),
     );
   }

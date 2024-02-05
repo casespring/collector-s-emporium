@@ -3,6 +3,7 @@ import 'package:collectors_social_media_app/pages/community_page.dart';
 import 'package:collectors_social_media_app/pages/message_page.dart';
 import 'package:collectors_social_media_app/pages/post_page.dart';
 import 'package:collectors_social_media_app/pages/home_page.dart'; 
+import 'package:collectors_social_media_app/pages/search_page.dart';
 import 'package:collectors_social_media_app/pages/feed_page.dart'; 
 import 'package:collectors_social_media_app/pages/profile_page.dart';
 import 'package:collectors_social_media_app/pages/notification_page.dart';
@@ -19,16 +20,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/', // Set the initial route
+      initialRoute: '/', // the initial route
       routes: {
-        '/': (context) => HomePage(), 
-        '/feed': (context) => FeedPage(), 
-        '/post': (context) => PostPage(),
-        '/community': (context) => CommunityPage(),
-        '/message': (context) => MessagePage(),
-        '/profile': (context) => ProfilePage(),
-        '/notification': (context) => NotificationPage(),
-        '/settings': (context) => SettingsPage(),
+        '/': (context) => const HomePage(), 
+        '/feed': (context) => const FeedPage(), 
+        '/search': (context) => const SearchPage(),
+        '/post': (context) => const PostPage(),
+        '/community': (context) => const CommunityPage(),
+        '/message': (context) => const MessagePage(),
+        '/profile': (context) => const ProfilePage(),
+        '/notification': (context) => const NotificationPage(),
+        '/settings': (context) => const SettingsPage(),
       },
     );
   }

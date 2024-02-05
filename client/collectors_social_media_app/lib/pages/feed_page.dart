@@ -17,34 +17,34 @@ class FeedPage extends StatelessWidget {
             return ListView.builder(
               itemCount: snapshot.data?.length,
               itemBuilder: (context, index) {
-                return Container(
-                  height: 500, // Adjust this value as needed
-                  child: Stack(
-                    fit: StackFit.expand,
+                return Card(
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
                     children: <Widget>[
                       Image.network(
                         snapshot.data?[index]['image_url'],
                         fit: BoxFit.cover,
+                        height: 400,
+                        width: double.infinity,
                       ),
-                      Positioned(
-                        bottom: 10,
-                        left: 10,
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               'Item ${snapshot.data?[index]['title']}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: Color(0xFF080202),
                               ),
                             ),
                             Text(
                               '${snapshot.data?[index]['description']}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
-                                color: Colors.white,
+                                color: Color(0xFF244446),
                               ),
                             ),
                           ],

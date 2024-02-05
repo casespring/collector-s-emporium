@@ -1,6 +1,7 @@
 import 'package:collectors_social_media_app/pages/feed_page.dart';
 import 'package:collectors_social_media_app/pages/notification_page.dart';
 import 'package:collectors_social_media_app/pages/profile_page.dart';
+import 'package:collectors_social_media_app/pages/search_page.dart';
 import 'package:collectors_social_media_app/pages/settings_page.dart';
 import 'package:collectors_social_media_app/pages/post_page.dart';
 import 'package:collectors_social_media_app/pages/community_page.dart';
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
 
   final List _pages = [
     FeedPage(),
+    SearchPage(),
     PostPage(),
     CommunityPage(),
     MessagePage(),
@@ -70,6 +72,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: "Search",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.post_add),
