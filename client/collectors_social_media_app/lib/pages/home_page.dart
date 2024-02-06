@@ -3,7 +3,7 @@ import 'package:collectors_social_media_app/pages/notification_page.dart';
 import 'package:collectors_social_media_app/pages/profile_page.dart';
 import 'package:collectors_social_media_app/pages/search_page.dart';
 import 'package:collectors_social_media_app/pages/settings_page.dart';
-import 'package:collectors_social_media_app/pages/post_page.dart';
+import 'package:collectors_social_media_app/pages/post_collection_page.dart';
 import 'package:collectors_social_media_app/pages/community_page.dart';
 import 'package:collectors_social_media_app/pages/message_page.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   final List _pages = [
     FeedPage(),
     SearchPage(),
-    PostPage(),
+    PostPage(userId: 2),
     CommunityPage(),
     MessagePage(),
   ];
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
               // Navigate to profile page
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfilePage())
+                MaterialPageRoute(builder: (context) => ProfilePage(userId: 2))
               );
             },
           ),

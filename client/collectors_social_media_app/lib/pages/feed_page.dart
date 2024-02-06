@@ -47,6 +47,45 @@ class FeedPage extends StatelessWidget {
                                 color: Color(0xFF244446),
                               ),
                             ),
+                            Text(
+                              'Posted by ${snapshot.data?[index]['user']['username']}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFF244446),
+                              ),
+                            ),
+                            Text(
+                              '♡  ${snapshot.data?[index]['likes_count']}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 6, 36, 33),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      child: ListView.builder(
+                                        itemCount: snapshot.data?[index]['comments'].length,
+                                        itemBuilder: (context, commentIndex) {
+                                          return ListTile(
+                                            title: Text(snapshot.data?[index]['comments'][commentIndex]['text']),
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Text(
+                                'Show Comments',
+                                style: TextStyle(
+                                  color: Colors.teal,
+                                ),
+                              ), 
+                            ),
                           ],
                         ),
                       ),
@@ -58,7 +97,6 @@ class FeedPage extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
-
           // By default, show a loading spinner.
           return CircularProgressIndicator();
         },

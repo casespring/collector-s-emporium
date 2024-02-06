@@ -22,6 +22,7 @@ class User(db.Model, SerializerMixin):
     last_name = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
+    user_bio = db.Column(db.Text)
     user_image = db.Column(db.String)
     created_at = db.Column(db.DateTime(timezone=True), default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())

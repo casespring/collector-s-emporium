@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:collectors_social_media_app/pages/community_page.dart';
 import 'package:collectors_social_media_app/pages/message_page.dart';
-import 'package:collectors_social_media_app/pages/post_page.dart';
+import 'package:collectors_social_media_app/pages/post_collection_page.dart';
 import 'package:collectors_social_media_app/pages/home_page.dart'; 
 import 'package:collectors_social_media_app/pages/search_page.dart';
 import 'package:collectors_social_media_app/pages/feed_page.dart'; 
@@ -25,10 +25,10 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomePage(), 
         '/feed': (context) => const FeedPage(), 
         '/search': (context) => const SearchPage(),
-        '/post': (context) => const PostPage(),
+        '/post': (context) => const PostPage(userId: 2),
         '/community': (context) => const CommunityPage(),
         '/message': (context) => const MessagePage(),
-        '/profile': (context) => const ProfilePage(),
+        '/profile': (context) => const ProfilePage(userId: 2),
         '/notification': (context) => const NotificationPage(),
         '/settings': (context) => const SettingsPage(),
       },

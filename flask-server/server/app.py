@@ -151,12 +151,28 @@ class UsersByID(Resource):
         else:
             return {'message': 'User not found'}, 404
 
+class UserCollections(Resource):
+    def get(self, user_id):
+        user = User.query.get(user_id)
+        if user:
+            collections = [collection.to_dict() for collection in user.collections]
+            return collections
+        else:
+            return {'message': 'User not found'}, 404
+
 class Collections(Resource):
 
     def get(self):
-        collections = Collection.query.all()
-        return {'users': [collection.to_dict() for collection in collections]}
-
+        collections = Collection.query.options(joinedload(Collection.comments), joinedload(Collection.likes), joinedload(Collection.user)).all()
+        collections_data = []
+        for collection in collections:
+            collection_data = collection.to_dict()
+            collection_data['user'] = collection.user.to_dict()  # Include user data
+            collection_data['comments'] = [comment.to_dict() for comment in collection.comments]  # Include comments
+            collection_data['likes_count'] = len(collection.likes)  # Include likes count
+            collections_data.append(collection_data)
+        return collections_data
+    
     def post(self):
         data = request.get_json()
         collection = Collection(title=data['title'], 
@@ -178,6 +194,7 @@ class CollectionByID(Resource):
         collection_data['user'] = collection.user.to_dict()  # Include user data
         collection_data['comments'] = [comment.to_dict() for comment in collection.comments]  # Include comments
         collection_data['likes_count'] = len(collection.likes)  # Include likes count
+        # collection_data['likes'] = [like.to_dict() for like in collection.likes]  # Include likes
 
         return collection_data, 200
 
@@ -218,6 +235,7 @@ class CommentResource(Resource):
 api.add_resource(Index, '/')
 api.add_resource(Users, '/users')
 api.add_resource(UsersByID, '/users/<int:user_id>')
+api.add_resource(UserCollections, '/users/<int:user_id>/collections')
 api.add_resource(Collections, '/collections')
 api.add_resource(CollectionByID, '/collections/<int:collection_id>')
 api.add_resource(CommentResource, '/comments')   
