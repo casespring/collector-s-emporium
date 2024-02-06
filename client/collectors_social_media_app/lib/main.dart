@@ -1,43 +1,32 @@
-import 'package:collectors_social_media_app/app/splash_screen/splash_screen.dart';
-import 'package:collectors_social_media_app/app/widgets/loading.dart';
-import 'package:collectors_social_media_app/app/widgets/something_went_wrong.dart';
+import 'package:collectors_social_media_app/widgets/loading.dart';
+import 'package:collectors_social_media_app/widgets/something_went_wrong.dart';
 import 'package:flutter/material.dart';
-import 'package:collectors_social_media_app/app/pages/landing_page.dart';
-import 'package:collectors_social_media_app/app/pages/community_page.dart';
-import 'package:collectors_social_media_app/app/pages/message_page.dart';
-import 'package:collectors_social_media_app/app/pages/post_page.dart';
-import 'package:collectors_social_media_app/app/pages/home_page.dart'; 
-import 'package:collectors_social_media_app/app/pages/search_page.dart';
-import 'package:collectors_social_media_app/app/pages/feed_page.dart'; 
-import 'package:collectors_social_media_app/app/pages/profile_page.dart';
-import 'package:collectors_social_media_app/app/pages/notification_page.dart';
-import 'package:collectors_social_media_app/app/pages/settings_page.dart';
+import 'package:collectors_social_media_app/pages/landing_page.dart';
+import 'package:collectors_social_media_app/pages/community_page.dart';
+import 'package:collectors_social_media_app/pages/message_page.dart';
+import 'package:collectors_social_media_app/pages/post_page.dart';
+import 'package:collectors_social_media_app/pages/home_page.dart'; 
+import 'package:collectors_social_media_app/pages/search_page.dart';
+import 'package:collectors_social_media_app/pages/feed_page.dart'; 
+import 'package:collectors_social_media_app/pages/profile_page.dart';
+import 'package:collectors_social_media_app/pages/notification_page.dart';
+import 'package:collectors_social_media_app/pages/settings_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 
-Future<void> main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
-  runApp(MyApp(
-    initialization: _initialization,
-  ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> initialization;
-
-  const MyApp({
-    Key? key,
-    required this.initialization,
-  }) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: initialization,
+      // Initialize FlutterFire
+      future: Firebase.initializeApp(),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
@@ -48,9 +37,8 @@ class MyApp extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            initialRoute: '/splash', // the initial route
+            initialRoute: '/', // the initial route
             routes: {
-              '/splash': (context) =>  SplashScreen(),
               '/': (context) => LandingPage(), 
               '/feed': (context) => const FeedPage(), 
               '/search': (context) => const SearchPage(),
