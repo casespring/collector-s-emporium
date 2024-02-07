@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:collectors_social_media_app/services/api_service.dart';
+import 'package:collectors_social_media_app/app/services/api_service.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:collectors_social_media_app/app/pages/landing_page.dart';
 import 'package:collectors_social_media_app/app/splash_screen/splash_screen.dart';
-import 'package:collectors_social_media_app/widgets/loading.dart';
-import 'package:collectors_social_media_app/widgets/something_went_wrong.dart';
+import 'package:collectors_social_media_app/app/widgets/loading.dart';
+import 'package:collectors_social_media_app/app/widgets/something_went_wrong.dart';
 import 'package:flutter/material.dart';
 import 'package:collectors_social_media_app/pages/community_page.dart';
 import 'package:collectors_social_media_app/pages/message_page.dart';

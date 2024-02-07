@@ -1,7 +1,7 @@
-import 'package:collectors_social_media_app/widgets/collection_detail_page.dart';
+import 'package:collectors_social_media_app/app/widgets/collection_detail_page.dart';
 import 'package:collectors_social_media_app/pages/notification_page.dart';
 import 'package:collectors_social_media_app/pages/settings_page.dart';
-import 'package:collectors_social_media_app/services/api_service.dart';
+import 'package:collectors_social_media_app/app/services/api_service.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
