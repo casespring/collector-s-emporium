@@ -22,6 +22,7 @@ def seed_users(bcrypt, num_users=30):
             email=fake.email(),
             password=bcrypt.generate_password_hash(str(i)).decode('utf-8'),
             user_image=fake.image_url(),
+            user_bio=fake.text(),
             created_at=fake.date_time_this_decade()
         )
         user_list.append(user)

@@ -1,10 +1,11 @@
+import 'package:collectors_social_media_app/app/pages/landing_page.dart';
+import 'package:collectors_social_media_app/app/splash_screen/splash_screen.dart';
 import 'package:collectors_social_media_app/widgets/loading.dart';
 import 'package:collectors_social_media_app/widgets/something_went_wrong.dart';
 import 'package:flutter/material.dart';
-import 'package:collectors_social_media_app/pages/landing_page.dart';
 import 'package:collectors_social_media_app/pages/community_page.dart';
 import 'package:collectors_social_media_app/pages/message_page.dart';
-import 'package:collectors_social_media_app/pages/post_page.dart';
+import 'package:collectors_social_media_app/pages/post_collection_page.dart';
 import 'package:collectors_social_media_app/pages/home_page.dart'; 
 import 'package:collectors_social_media_app/pages/search_page.dart';
 import 'package:collectors_social_media_app/pages/feed_page.dart'; 
@@ -32,26 +33,25 @@ class MyApp extends StatelessWidget {
         if (snapshot.hasError) {
           return SomethingWentWrong(errorMessage: snapshot.error.toString());
         }
-
-        // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            initialRoute: '/', // the initial route
+            initialRoute: '/splash', // the initial route
             routes: {
-              '/': (context) => LandingPage(), 
+              '/splash': (context) => SplashScreen(),
+              '/login': (context) =>  LandingPage(), 
+              '/': (context) => const HomePage(),
               '/feed': (context) => const FeedPage(), 
               '/search': (context) => const SearchPage(),
-              '/post': (context) => const PostPage(),
+              '/post': (context) => const PostPage(userId: 2,),
               '/community': (context) => const CommunityPage(),
               '/message': (context) => const MessagePage(),
-              '/profile': (context) => const ProfilePage(),
+              '/profile': (context) => const ProfilePage(userId: 2,),
               '/notification': (context) => const NotificationPage(),
               '/settings': (context) => const SettingsPage(),
             },
           );
         }
-
         // Otherwise, show something whilst waiting for initialization to complete
         return Loading();
       },
