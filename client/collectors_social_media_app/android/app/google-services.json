@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "951107304160",
+    "project_id": "collector-s-emporium",
+    "storage_bucket": "collector-s-emporium.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:951107304160:android:0576571e0cf0fe19322e85",
+        "android_client_info": {
+          "package_name": "com.example.collectors_social_media_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfzmjcxDflaQuZoygXFPa1nCFpOVPxAXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
