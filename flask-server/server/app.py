@@ -10,6 +10,8 @@ from flask_bcrypt import Bcrypt
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm import joinedload
 from flask_bcrypt import Bcrypt
+import firebase_admin
+from firebase_admin import credentials, auth
 import os
 
 app = Flask(__name__)
@@ -22,6 +24,10 @@ migrate = Migrate(app, db)
 db.init_app(app)
 bcrypt = Bcrypt(app)
 
+# Initialize Firebase Admin SDK
+cred = credentials.Certificate('../secrets/collector-s-emporium-firebase-adminsdk-cyaqi-fc12ca5c3d.json')
+firebase_admin.initialize_app(cred)
+
 api = Api(app)
 
 # @app.route('/')
@@ -33,29 +39,39 @@ api = Api(app)
 #     users = User.query.all()
 #     return [user.to_dict() for user in users]
 
-# CHECK SESSION
-@app.get('/check_session')
-def check_session():
-    user = User.query.get(session.get('user_id'))
-    print(f'check session {session.get("user_id")}')
-    if user:
-        return user.to_dict(rules=['-password']), 200
-    else:
-        return {"message": "No user logged in"}, 401
+# # CHECK SESSION
+# @app.get('/check_session')
+# def check_session():
+#     user = User.query.get(session.get('user_id'))
+#     print(f'check session {session.get("user_id")}')
+#     if user:
+#         return user.to_dict(rules=['-password']), 200
+#     else:
+#         return {"message": "No user logged in"}, 401
 
-# LOGIN
-@app.post('/login')
-def login():
-    data = request.json
+# # LOGIN
+# @app.post('/login')
+# def login():
+#     data = request.json
 
-    user = User.query.filter(User.name == data.get('name')).first()
+#     user = User.query.filter(User.name == data.get('name')).first()
 
-    if user and bcrypt.check_password_hash(user.password, data.get('password')):
-        session["user_id"] = user.id
-        print("success")
-        return user.to_dict(rules=['-password']), 200
-    else:
-        return { "error": "Invalid username or password" }, 401
+#     if user and bcrypt.check_password_hash(user.password, data.get('password')):
+#         session["user_id"] = user.id
+#         print("success")
+#         return user.to_dict(rules=['-password']), 200
+#     else:
+#         return { "error": "Invalid username or password" }, 401
+
+def check_firebase_connection():
+    try:
+        user = auth.get_user_by_email('test@test.com')
+        print('Successfully fetched user data:', user)
+    except Exception as e:
+        print('Failed to fetch user data:', e)
+
+check_firebase_connection()
+
 
 class Index(Resource):
     def get(self):
@@ -79,8 +95,25 @@ class Users(Resource):
             return {'message': 'A user with that username already exists'}, 400
         if User.query.filter_by(email=data['email']).first():
             return {'message': 'A user with that email already exists'}, 400
+        
+        # Create a new user in Firebase
+        firebase_user = auth.create_user(
+            email=data['email'],
+            email_verified=False,
+            password=data['password'],
+            display_name=data['username'],
+            disabled=False
+        )
+        
+        # Create a new user in database
         hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
-        user = User(username=data['username'], first_name=data['first_name'], last_name=data['last_name'], email=data['email'], password=hashed_password)
+        user = User(
+            username=data['username'], 
+            first_name=data['first_name'], 
+            last_name=data['last_name'], 
+            email=data['email'], 
+            password=hashed_password
+        )
         db.session.add(user)
         db.session.commit()
         return user.to_dict(), 201

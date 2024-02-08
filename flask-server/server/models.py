@@ -5,6 +5,7 @@ from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.sql import func
+from firebase_admin import auth
 
 # Create a metadata instance
 # Definitions of tables and associated schema constructs
