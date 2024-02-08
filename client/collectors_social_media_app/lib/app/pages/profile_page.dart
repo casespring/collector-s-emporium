@@ -1,6 +1,6 @@
 import 'package:collectors_social_media_app/app/widgets/collection_detail_page.dart';
-import 'package:collectors_social_media_app/pages/notification_page.dart';
-import 'package:collectors_social_media_app/pages/settings_page.dart';
+import 'package:collectors_social_media_app/app/pages/notification_page.dart';
+import 'package:collectors_social_media_app/app/pages/settings_page.dart';
 import 'package:collectors_social_media_app/app/services/api_service.dart';
 import 'package:flutter/material.dart';
 

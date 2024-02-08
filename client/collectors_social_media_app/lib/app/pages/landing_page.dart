@@ -1,11 +1,12 @@
-import 'package:collectors_social_media_app/app/pages/Login_page.dart';
+import 'package:collectors_social_media_app/app/pages/login_page.dart';
+import 'package:collectors_social_media_app/app/pages/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:collectors_social_media_app/app/pages/home_page.dart';
 import 'package:collectors_social_media_app/app/widgets/sign_in_button.dart';
 
 class LandingPage extends StatelessWidget {
-  
+
   @override 
   Widget build(BuildContext context) {
     final _auth = FirebaseAuth.instance;
@@ -39,7 +40,19 @@ class LandingPage extends StatelessWidget {
                       },
                     ), 
                     TextButton(
-                      child: Text('Continue without signing in'),
+                      child: Text('don\'t have an account? Sign up'),
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (contex) => SignUpPage()),
+                        );
+                      },
+                    ),
+                    TextButton(
+                      child: Text('Continue without an account'),
                       style: TextButton.styleFrom(
                         primary: Colors.white,
                       ),

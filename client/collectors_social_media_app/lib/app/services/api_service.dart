@@ -55,4 +55,22 @@ class ApiService {
       throw Exception('Failed to post collection');
     }
   }
+
+  Future<void> postUser(String username, String email, String password) async {
+    final response = await http.post(
+      Uri.parse('http://127.0.0.1:5565/users'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'username': username,
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode != 201) {
+      throw Exception('Failed to post user');
+    }
+  }
 }

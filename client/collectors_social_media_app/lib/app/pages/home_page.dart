@@ -1,12 +1,12 @@
 import 'package:collectors_social_media_app/app/pages/post_page.dart';
-import 'package:collectors_social_media_app/pages/feed_page.dart';
-import 'package:collectors_social_media_app/pages/notification_page.dart';
-import 'package:collectors_social_media_app/pages/post_collection_page.dart';
-import 'package:collectors_social_media_app/pages/profile_page.dart';
-import 'package:collectors_social_media_app/pages/search_page.dart';
-import 'package:collectors_social_media_app/pages/settings_page.dart';
-import 'package:collectors_social_media_app/pages/community_page.dart';
-import 'package:collectors_social_media_app/pages/message_page.dart';
+import 'package:collectors_social_media_app/app/pages/feed_page.dart';
+import 'package:collectors_social_media_app/app/pages/notification_page.dart';
+import 'package:collectors_social_media_app/app/pages/post_collection_page.dart';
+import 'package:collectors_social_media_app/app/pages/profile_page.dart';
+import 'package:collectors_social_media_app/app/pages/search_page.dart';
+import 'package:collectors_social_media_app/app/pages/settings_page.dart';
+import 'package:collectors_social_media_app/app/pages/community_page.dart';
+import 'package:collectors_social_media_app/app/pages/message_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {

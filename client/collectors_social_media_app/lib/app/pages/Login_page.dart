@@ -35,7 +35,7 @@ class LoginPage extends StatelessWidget {
                 obscureText: true,
               ),
               ElevatedButton(
-                child: Text('Sign In'),
+                child: const Text('Sign In'),
                 onPressed: () async {
                   try {
                     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
