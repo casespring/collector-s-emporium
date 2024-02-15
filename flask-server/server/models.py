@@ -24,9 +24,10 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
     user_bio = db.Column(db.Text)
-    user_image = db.Column(db.String)
+    user_image = db.Column(db.String(500))
     created_at = db.Column(db.DateTime(timezone=True), default=func.now())
     updated_at = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    uid = db.Column(db.String(50), unique=True, nullable=False)
 
     # relationships
     # notifications = db.relationship("Notification", back_populates="user", foreign_keys="Notification.user_id")

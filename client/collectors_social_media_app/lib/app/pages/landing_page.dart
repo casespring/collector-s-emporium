@@ -1,5 +1,5 @@
 import 'package:collectors_social_media_app/app/pages/login_page.dart';
-import 'package:collectors_social_media_app/app/pages/sign_in_page.dart';
+import 'package:collectors_social_media_app/app/pages/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:collectors_social_media_app/app/pages/home_page.dart';
@@ -17,7 +17,7 @@ class LandingPage extends StatelessWidget {
           User? user = snapshot.data;
           if (user == null) {
             return Scaffold(
-              backgroundColor: Colors.tealAccent,
+              backgroundColor: Color.fromARGB(255, 84, 254, 254), // Dark Teal
               body: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +27,7 @@ class LandingPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Color.fromARGB(212, 255, 255, 255), // Gray
                       ),
                     ),
                     SizedBox(height: 16),
@@ -39,10 +39,11 @@ class LandingPage extends StatelessWidget {
                         );
                       },
                     ), 
-                    TextButton(
+                    ElevatedButton(
                       child: Text('don\'t have an account? Sign up'),
-                      style: TextButton.styleFrom(
-                        primary: Colors.white,
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(255, 255, 255, 255), // Light Teal
+                        onPrimary: Color.fromARGB(255, 26, 180, 167), // Gray
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -51,18 +52,18 @@ class LandingPage extends StatelessWidget {
                         );
                       },
                     ),
-                    TextButton(
-                      child: Text('Continue without an account'),
-                      style: TextButton.styleFrom(
-                        primary: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
-                      },
-                    ),
+                    // TextButton(
+                    //   child: Text('Continue without an account'),
+                    //   style: TextButton.styleFrom(
+                    //     primary: Color(0xFFA0A0A0), // Gray
+                    //   ),
+                    //   onPressed: () {
+                    //     Navigator.pushReplacement(
+                    //       context,
+                    //       MaterialPageRoute(builder: (context) => HomePage()),
+                    //     );
+                    //   },
+                    // ),
                   ],
                 ),
               ),
@@ -72,10 +73,10 @@ class LandingPage extends StatelessWidget {
           }
         } else {
           return Scaffold(
-            backgroundColor: Colors.tealAccent,
+            backgroundColor: Color(0xFF005151), // Dark Teal
             body: Center(
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4AB3B4)), // Light Teal
               ),
             ),
           );

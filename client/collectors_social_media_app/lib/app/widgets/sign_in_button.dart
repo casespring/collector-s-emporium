@@ -10,6 +10,10 @@ class SignInButton extends StatelessWidget {
     return ElevatedButton(
       child: Text('Sign In'),
       onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(255, 255, 255, 255), // Light Teal
+                        onPrimary: Color.fromARGB(255, 26, 180, 167), // Gray
+                      ),
     );
   }
 }

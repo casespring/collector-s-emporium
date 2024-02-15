@@ -34,20 +34,31 @@ class MyApp extends StatelessWidget {
           return SomethingWentWrong(errorMessage: snapshot.error.toString());
         }
         if (snapshot.connectionState == ConnectionState.done) {
+          final userId = FirebaseAuth.instance.currentUser?.uid;
+          if (userId == null) {
+            // Redirect to login page
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              initialRoute: '/login', // the initial route
+              routes: {
+                '/login': (context) =>  LandingPage(), 
+              },
+            );
+          }
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             initialRoute: '/splash', // the initial route
             routes: {
               '/splash': (context) => SplashScreen(),
               '/login': (context) =>  LandingPage(), 
-              '/': (context) => const HomePage(),
+              '/': (context) => HomePage(),
               '/feed': (context) => const FeedPage(), 
               '/search': (context) => const SearchPage(),
-              '/post': (context) => const PostPage(userId: 2,),
+              '/post': (context) => PostPage(userId: userId),
               '/community': (context) => const CommunityPage(),
-              '/message': (context) => const MessagePage(),
-              '/profile': (context) => const ProfilePage(userId: 2,),
-              '/notification': (context) => const NotificationPage(),
+              '/message': (context) =>  MessagePage(),
+              '/profile': (context) => ProfilePage(userId: userId),
+              '/notification': (context) =>  NotificationPage(),
               '/settings': (context) => const SettingsPage(),
             },
           );

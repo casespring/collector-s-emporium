@@ -5,10 +5,10 @@ import 'package:collectors_social_media_app/app/pages/settings_page.dart';
 import 'package:collectors_social_media_app/app/services/api_service.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
-  final String userId;
+class UserProfilePage extends StatelessWidget {
+  final String username;
 
-  const ProfilePage({Key? key, required this.userId}) : super(key: key);
+  const UserProfilePage({Key? key, required this.username}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,20 +41,10 @@ class ProfilePage extends StatelessWidget {
               );
             }
           ),
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () {
-              // Navigate to edit profile page
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EditProfilePage(userId: userId))
-              );
-            }
-          ),
         ]
       ),
       body: FutureBuilder<Map<String, dynamic>>(
-        future: ApiService().fetchUserData(userId),
+        future: ApiService().fetchUserDataByUsername(username),
         builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -78,7 +68,7 @@ class ProfilePage extends StatelessWidget {
                   SizedBox(height: 16),
                   Text('Collections:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   FutureBuilder<List<dynamic>>(
-                    future: ApiService().fetchUserCollections(userId),
+                    future: ApiService().fetchUserCollectionsByUsername(username),
                     builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return CircularProgressIndicator();
@@ -88,9 +78,9 @@ class ProfilePage extends StatelessWidget {
                         return Expanded(
                           child: GridView.builder(
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2, // Adjust number of items per row
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
+                              crossAxisCount: 3, // Adjust number of items per row
+                              crossAxisSpacing: 2,
+                              mainAxisSpacing: 2,
                             ),
                             itemCount: snapshot.data?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
@@ -105,7 +95,17 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                child: Image.network(snapshot.data?[index]['image_url'] ?? ''),
+                                child: AspectRatio(
+                                  aspectRatio: 1 / 1, // This makes the aspect ratio 1:1 (square)
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(snapshot.data?[index]['image_url'] ?? ''),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               );
                             },
                           ),

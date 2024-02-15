@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:io';
 
 class ApiService {
   Future<List<dynamic>> fetchData() async {
@@ -17,8 +18,8 @@ class ApiService {
     }
   }
 
-    Future<Map<String, dynamic>> fetchUserData(int userId) async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:5565/users/$userId'));
+    Future<Map<String, dynamic>> fetchUserData(String uid) async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:5565/users/$uid'));
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body) as Map<String, dynamic>;
@@ -27,8 +28,8 @@ class ApiService {
     }
   }
 
-    Future<List<dynamic>> fetchUserCollections(int userId) async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:5565/users/$userId/collections'));
+    Future<List<dynamic>> fetchUserCollections(String uid) async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:5565/users/$uid/collections'));
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body) as List;
@@ -37,7 +38,7 @@ class ApiService {
     }
   }
 
-  Future<void> postCollection(String title, String description, String imageUrl, int userId) async {
+  Future<void> postCollection(String title, String description, String imageUrl, userId) async {
     final response = await http.post(
       Uri.parse('http://127.0.0.1:5565/collections'),
       headers: <String, String>{
@@ -56,7 +57,7 @@ class ApiService {
     }
   }
 
-  Future<void> postUser(String username, String email, String password) async {
+  Future<void> postUser(String username, String firstName, String lastName, String email, String password, String uid) async {
     final response = await http.post(
       Uri.parse('http://127.0.0.1:5565/users'),
       headers: <String, String>{
@@ -64,13 +65,49 @@ class ApiService {
       },
       body: jsonEncode(<String, String>{
         'username': username,
+        'first_name': firstName,
+        'last_name': lastName,
         'email': email,
         'password': password,
+        'uid': uid,
       }),
     );
 
     if (response.statusCode != 201) {
       throw Exception('Failed to post user');
+    }
+  }
+
+  Future<void> postSubmission(String title, String description, String imageUrl, String userId) async {
+    var request = http.MultipartRequest('POST', Uri.parse('http://127.0.0.1:5565/collections'));
+    request.fields['title'] = title;
+    request.fields['description'] = description;
+    request.fields['userId'] = userId;
+    request.fields['image'] = imageUrl; // Send the image URL
+    var response = await request.send();
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to post submission');
+    }
+  }
+
+  Future<List<dynamic>> fetchUserCollectionsByUsername(String username) async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:5565/users/info/$username/collections'));
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body) as List;
+    } else {
+      throw Exception('Failed to load user collections');
+    }
+  }
+
+  Future<Map<String, dynamic>> fetchUserDataByUsername(String username) async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:5565/users/info/$username'));
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body) as Map<String, dynamic>;
+    } else {
+      throw Exception('Failed to load user data');
     }
   }
 }

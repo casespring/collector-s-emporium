@@ -11,17 +11,34 @@ class CollectionDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(collection['title'] ?? ''),
       ),
-      body: Column(
+      body: ListView(
         children: [
-          Image.network(
-            collection['image_url'] ?? '',
-            fit: BoxFit.cover,
-            height: MediaQuery.of(context).size.height * 0.6, // 60% of the screen height
+          AspectRatio(
+            aspectRatio: 1 / 1, // This makes the aspect ratio 1:1 (square)
+            child: Image.network(
+              collection['image_url'] ?? '',
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(collection['description'] ?? ''),
-          ),
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                      Text(collection['description'] ?? '', style: TextStyle(fontSize: 16)),
+                      SizedBox(height: 16),
+                      Text('Likes: ${collection['likes_count'] ?? 0}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 16),
+                      Text('Comments:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      ...collection['comments']?.map<Widget>((comment) {
+                          return ListTile(
+                              title: Text(comment['user']['username'] ?? 'Anonymous'), // Display "Anonymous" if user is null
+                              subtitle: Text(comment['comment']['text'] ?? 'No comment text'), // Display "No comment text" if text is null
+                          );
+                      }) ?? [],
+                  ],
+              ),
+          )
         ],
       ),
     );
