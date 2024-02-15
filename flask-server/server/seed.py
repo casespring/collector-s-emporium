@@ -31,14 +31,26 @@ def seed_users(bcrypt, num_users=30):
     db.session.add_all(user_list)
     db.session.commit()
 
-def seed_collections(num_collections=50):
+def seed_collections(num_collections=10):
     collection_list = []
+    image_urls = ["https://www.boredpanda.com/blog/wp-content/uploads/2020/11/interesting-collections-6-5faa8f95a3cdf__700.jpg",
+                  "https://www.brandeis.edu/library/archives/images/home/home-3.jpg", "https://static.tuoitrenews.vn/ttnew/r/2021/04/28/isjvusodfvkevkeri6cbrj22ny-1619576951.jpg",
+                  "https://i2-prod.dailystar.co.uk/incoming/article19459388.ece/ALTERNATES/s1227b/0_httpscdnimagesdailystarcoukdynamic122photos286000900x738841286",
+                  "https://atchuup.com/wp-content/uploads/2014/11/crazy-collections-hot-sauce.jpg",
+                  "https://img.buzzfeed.com/buzzfeed-static/static/2017-09/12/14/asset/buzzfeed-prod-fastlane-01/sub-buzz-25004-1505242758-6.jpg?downsize=1600%3A%2A&output-quality=auto&output-format=auto",
+                  "https://cdn.homeaddict.io/wp-content/uploads/2022/05/a3fc0997-f81f-4d8d-b0e6-6d68e6d94a6e-545x438.jpeg",
+                  "https://images2.minutemediacdn.com/image/upload/c_fill,w_1440,ar_16:9,f_auto,q_auto,g_auto/shape/cover/sport/pr-6-23b21dbf15d8b8071a0d68ca3f2ae689.jpg",
+                  "https://img.buzzfeed.com/buzzfeed-static/static/2017-09/12/14/asset/buzzfeed-prod-fastlane-02/sub-buzz-22040-1505241544-5.jpg?downsize=1600%3A%2A&output-quality=auto&output-format=auto",
+                  "https://cdn.apartmenttherapy.info/image/upload/v1680191961/at/style/2023-04/hilton-carter-target-collection-2023/hilton-carter-target-collection-2023.jpg",
+                  "https://i.etsystatic.com/22211647/r/il/bd899e/3877978083/il_570xN.3877978083_6ytt.jpg",]
+    
+    random.shuffle(image_urls)
 
     for i in range(num_collections):
         collection = Collection(
             title=fake.sentence(),
             description=fake.text(),
-            image_url=fake.image_url(),
+            image_url=image_urls.pop(),
             user_id=randint(1, 10),
             created_at=fake.date_time_this_decade()
         )

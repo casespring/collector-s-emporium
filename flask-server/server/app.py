@@ -136,12 +136,22 @@ class Users(Resource):
             password=hashed_password,
             uid=firebase_user.uid,
             user_image=image_url,
+            user_bio=data['user_bio']
         )
         db.session.add(user)
         db.session.commit()
         return user.to_dict(), 201
     
 class UserByUid(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('username', type=str, help='Username is required', required=True)
+    parser.add_argument('first_name', type=str, help='First name is required', required=True)
+    parser.add_argument('last_name', type=str, help='Last name is required', required=True)
+    parser.add_argument('email', type=str, help='Email is required', required=True)
+    parser.add_argument('password', type=str, help='Password is required', required=True)
+    parser.add_argument('user_image', type=str)
+    parser.add_argument('user_bio', type=str)
+
 
     def get(self, user_uid):
         user = User.query.filter_by(uid=user_uid).first()
@@ -160,6 +170,10 @@ class UserByUid(Resource):
                 user.first_name = data['first_name']
             if 'last_name' in data:
                 user.last_name = data['last_name']
+            if 'user_image' in data:
+                user.user_image = data['user_image']
+            if 'user_bio' in data:
+                user.user_bio = data['user_bio']
             if 'email' in data:
                 user.email = data['email']
             if 'password' in data:
